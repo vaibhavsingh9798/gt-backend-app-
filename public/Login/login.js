@@ -21,7 +21,7 @@ const login = async (user)=>{
     let errMsg = ''
     let token;
     try{
-    const resp = await axios.post('http://localhost:3001/user/signin',user)
+    const resp = await axios.post('http://localhost:8002/api/v1/users/login',user)
     console.log('resp....',resp)
     token = resp.data.token
     }
@@ -40,6 +40,6 @@ const login = async (user)=>{
     else{
       alert('You are successfully logged in')
       localStorage.setItem('token',token)
-      location.assign('http://localhost:3001/Expense/expense.html')
+     // location.assign('http://localhost:8002/Expense/expense.html')
     }
 }

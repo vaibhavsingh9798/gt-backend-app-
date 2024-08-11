@@ -27,12 +27,17 @@ const signup = async (user)=>{
      let errMsg = ''
     console.log('signup call with',user)
     try{
-    const resp = await axios.post('http://localhost:3001/user/signup',user)
-    console.log('resp',resp)
+    const resp = await axios.post('http://localhost:8002/api/v1/users/signup',user ,{
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    console.log('resp...',resp)
     }catch(error){ 
-       success = error.response.data.success
-       errMsg = error.response.data.message
-      console.error('e',error)
+
+       success = error.response?.data.success || false
+       errMsg = error.response?.data.message || 'Failed'
+      console.error('e...',error)
     }
     if(!success){
       console.log('!success block')
