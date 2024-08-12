@@ -71,9 +71,9 @@ exports.getUsers = async (req,res) =>{
 
 exports.updateUser = async (req,res) =>{
     const updates = req.body;
-    const {id} = req.params
+    const {id} = req.params;
+    console.log('update ...',id,updates)
     try{
-     
         const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
         res.status(201).json({success:true,data:updatedUser});
           
@@ -84,10 +84,13 @@ exports.updateUser = async (req,res) =>{
 }
 
 exports.deleteUser = async (req,res) =>{
-    const {id} = req.params
+    const userId = req.params.id;
     try{
-        const updatedUser = await User.findByIdAndDelete(id);
-       return res.status(201).json({success:true,message: 'User deleted'});  
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+          return res.status(404).json({success:false, message: 'User not found' });
+        }
+        res.status(200).json({success:true, message: 'User deleted successfully' });
     }catch(err){
         return res.status(500).json({success:false,message:'Internal Server Error !'})
     }
